@@ -1,6 +1,6 @@
 <input type="text" ng-model="studentList.search" class="search-query" id="students_search"
        placeholder="Search">
-<table>
+<table id="studentlist">
   <thead>
   <tr>
     <th>Roll Number</th>
@@ -16,7 +16,7 @@
   </tr>
   </thead>
   <tbody>
-  <tr ng-repeat="student in studentList.students | filter:studentList.search | orderBy:'firstname'">
+  <tr ng-repeat="student in studentList.students | filter:studentList.search | orderBy:'rollnumber'">
     <td><a ng-href="#" target="_blank">{{student.rollnumber}}</a></td>
     <td>{{student.firstname}}</td>
     <td>{{student.lastname}}</td>
