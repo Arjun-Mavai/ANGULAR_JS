@@ -109,4 +109,10 @@ angular.module('student', ['ngRoute', 'firebase'])
            $location.path('/');
         });
     };
+    
+    // editStudent.cancel = function() {
+    //     editStudent.students.$save(editStudent.student).then(function(data) {
+    //       $location.path('/');
+    //     });
+    // };
 });
