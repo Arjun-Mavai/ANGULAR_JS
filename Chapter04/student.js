@@ -1,12 +1,11 @@
-//https://amanprojects-list.firebaseio.com/
-//https://ng-projects-list.firebaseio.com/
+
 angular.module('student', ['ngRoute', 'firebase'])
 
 .value('fbURL', 'https://aman-studentlist.firebaseio.com/')
 .service('fbRef', function(fbURL) {
   return new Firebase(fbURL)
 })
-.service('fbAuth', function($q, $firebase, $firebaseAuth, fbRef) {
+.service('fbAuth', function($q, $firebaseAuth, fbRef) {
   var auth;
   return function () {
       if (auth) return $q.when(auth);
@@ -23,19 +22,18 @@ angular.module('student', ['ngRoute', 'firebase'])
   }
 })
 
-.service('Students', function($q, $firebase, fbRef, fbAuth, studentListValue) {
+.service('Students', function($q, $firebaseArray, fbRef, fbAuth, studentListValue) {
   var self = this;
   this.fetch = function () {
     if (this.students) return $q.when(this.students);
     return fbAuth().then(function(auth) {
       var deferred = $q.defer();
-      var ref = fbRef.child('students-fresh/' + auth.auth.uid);
-      var $students = $firebase(ref);
+      var ref = fbRef.child('students-fresh/' + auth.uid);
       ref.on('value', function(snapshot) {
         if (snapshot.val() === null) {
-          $students.$set(studentListValue);
+          ref.set(studentListValue);
         }
-        self.students = $students.$asArray();
+        self.students = $firebaseArray(ref);
         deferred.resolve(self.students);
       });
 
