@@ -29,7 +29,7 @@
       <input type="number" name="social" id="social" class="form-control" ng-model="editStudent.student.social" required>
       
     <br>
-    <a href="#/" class="btn btn-default">Cancel</a>
+    <button ng-click="editStudent.cancel()" class="btn btn-primary">Cancel</button>
     <button ng-click="myForm.$valid && editStudent.save()" class="btn btn-primary">Save</button>
     <button ng-click="editStudent.destroy()" ng-show="editStudent.student.$id" class="btn btn-danger">Delete</button>
   </div>

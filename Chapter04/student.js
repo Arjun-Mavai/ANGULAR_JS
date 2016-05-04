@@ -38,7 +38,7 @@ angular.module('student', ['ngRoute', 'firebase'])
       });
 
       //Remove students list when no longer needed.
-      ref.onDisconnect().remove();
+      //ref.onDisconnect().remove();
       return deferred.promise;
     });
   };
@@ -84,6 +84,9 @@ angular.module('student', ['ngRoute', 'firebase'])
           $location.path('/');
       });
   };
+   editStudent.cancel = function() {
+    $location.path('/');
+  };
 })
 
 .controller('EditStudentController',
@@ -95,7 +98,9 @@ angular.module('student', ['ngRoute', 'firebase'])
     editStudent.students = students;
     studentIndex = editStudent.students.$indexFor(studentId);
     editStudent.student = editStudent.students[studentIndex];
-
+    //saving the old state of the student object
+    var oldstudent = angular.copy(editStudent.student);
+    
     editStudent.destroy = function() {
         editStudent.students.$remove(editStudent.student).then(function(data) {
             $location.path('/');
@@ -108,9 +113,8 @@ angular.module('student', ['ngRoute', 'firebase'])
         });
     };
     
-    // editStudent.cancel = function() {
-    //     editStudent.students.$save(editStudent.student).then(function(data) {
-    //       $location.path('/');
-    //     });
-    // };
+    editStudent.cancel = function() {
+        angular.copy(oldstudent,editStudent.student);
+        $location.path('/');
+    };
 });
