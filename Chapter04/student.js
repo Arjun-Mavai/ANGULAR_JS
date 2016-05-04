@@ -62,9 +62,22 @@ angular.module('student', ['ngRoute', 'firebase'])
       templateUrl:'detail.html',
       resolve: resolveStudents
     })
+    .when('/profile/:studentId', {
+      controller:'EditStudentController as editStudent',
+      templateUrl:'profile.html',
+      resolve: resolveStudents
+    })
     .when('/new', {
       controller:'NewStudentController as editStudent',
       templateUrl:'detail.html',
+      resolve: resolveStudents
+    })
+    .when('/contact', {
+      templateUrl:'contact.html',
+      resolve: resolveStudents
+    })
+    .when('/about', {
+      templateUrl:'about.html',
       resolve: resolveStudents
     })
     .otherwise({
@@ -90,14 +103,14 @@ angular.module('student', ['ngRoute', 'firebase'])
 })
 
 .controller('EditStudentController',
-  function($location, $routeParams, students) {
+  function($location, $routeParams,students) {
     var editStudent = this;
     var studentId = $routeParams.studentId,
         studentIndex;
-
     editStudent.students = students;
     studentIndex = editStudent.students.$indexFor(studentId);
     editStudent.student = editStudent.students[studentIndex];
+    editStudent.date = new Date();
     //saving the old state of the student object
     var oldstudent = angular.copy(editStudent.student);
     
@@ -118,3 +131,4 @@ angular.module('student', ['ngRoute', 'firebase'])
         $location.path('/');
     };
 });
+

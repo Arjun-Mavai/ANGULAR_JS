@@ -22,7 +22,7 @@
     </thead>
     <tbody>
     <tr ng-repeat="student in studentList.students | filter:studentList.search | orderBy:'rollnumber'">
-      <td><a ng-href="#" target="_blank">{{student.rollnumber}}</a></td>
+      <td><a ng-href="#/profile/{{student.$id}}">{{student.rollnumber}}</a></td>
       <td>{{student.firstname}}</td>
       <td>{{student.lastname}}</td>
       <td>{{student.email}}</td>
