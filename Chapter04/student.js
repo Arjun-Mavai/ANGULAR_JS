@@ -121,6 +121,7 @@ angular.module('student', ['ngRoute', 'firebase'])
     };
 
     editStudent.save = function() {
+        editStudent.student.date_of_birth = editStudent.student.date_of_birth.getTime();
         editStudent.students.$save(editStudent.student).then(function(data) {
            $location.path('/');
         });
@@ -130,5 +131,22 @@ angular.module('student', ['ngRoute', 'firebase'])
         angular.copy(oldstudent,editStudent.student);
         $location.path('/');
     };
-});
+})
+
+.directive('myDirective', function() {
+  return {
+    require: 'ngModel',
+    link: function(scope, element, attrs, ngModelController) {
+      ngModelController.$parsers.push(function(data) {
+        //convert data from view format to model format
+        return data; //converted
+      });
+
+      ngModelController.$formatters.push(function(data) {
+        //convert data from model format to view format
+        return data; //converted
+      });
+    }
+  }
+});;
 
